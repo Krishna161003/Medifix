@@ -1,8 +1,9 @@
-version: '3.9'
+version: '3'
 
 services:
   web:
-    build: .
+    build:
+      context: .
     command: gunicorn medifix_master.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/app
@@ -21,3 +22,7 @@ services:
       - static_volume:/app/static
     depends_on:
       - web
+
+volumes:
+  static_volume:
+    # Optional: configuration for static_volume
