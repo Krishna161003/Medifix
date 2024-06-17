@@ -13,3 +13,4 @@ tablib
 tzdata
 xlrd
 xlwt
+gunicorn
