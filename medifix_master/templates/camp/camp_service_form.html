@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block pagetitle %}Medifix - Home{% endblock %}
+{% block content %}
+<h2>Create Camp Service</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>
+{% endblock %}

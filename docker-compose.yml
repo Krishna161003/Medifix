@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    command: gunicorn medifix_master.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=medifix_master.settings
+
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - "8002:80"  # Map port 8001 on the host to port 80 in the container
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - static_volume:/app/static
+    depends_on:
+      - web

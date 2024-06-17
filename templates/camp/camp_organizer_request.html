@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block pagetitle %}Medifix - Camp Organizer Request{% endblock %}
+{% block content %}
+{% if user.is_superuser %}
+<div class="pt-3"></div>
+<div class="card">
+    <div class="card-body">
+        Camp Organizers Request
+    </div>
+</div>
+<div class="pb-3"></div>
+<table class="table table-hover table-primary table-striped">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Email address</th>
+            <th>Phone Number</th>
+            <th>Date of Birth</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for profile in submitted_profiles %}
+        <tr>
+            <td>{{ profile.user_name.username }}</td>
+            <td>{{ profile.user_name.email }}</td>
+            <td>{{ profile.phone_number }}</td>
+            <td>{{ profile.date_of_birth }}</td>
+            <td>
+                <a href="{% url 'approve_application' profile.user_name.username %}" class="btn btn-success">Approve</a>
+                <a href="{% url 'deny_application' profile.user_name.username %}" class="btn btn-danger">Deny</a>
+                <a href="{% url 'organizer_user_profile_detail' profile.user_name.username %}" class="btn btn-info">View
+                    Details</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td style="color: red;" colspan="5" class="text-center">No data Avaliable</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

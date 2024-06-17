@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block pagetitle %}Medifix - Camp Register{% endblock %}
+{% block content %}
+{% if submitted_application %}
+{% if camp_register %}
+<div class="card bg-success text-white">
+    <div class="card-body">
+        The Application has been approved.
+    </div>
+</div>
+{% else %}
+<div class="card bg-primary text-white">
+    <div class="card-body">
+        The Application has been submitted and awating for approval.
+    </div>
+</div>
+{% endif %}
+
+{% else %}
+{% if form.errors %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <p>Invalid Credentials. Retry again.</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+<form method="POST">
+    {% csrf_token %}
+    <legend>Register as a Camp Organizer</legend>
+    <h6>Fill out the below Form......</h6>
+    <div class="mb-3">
+        <label for="MobileNumber" class="form-label">Mobile Number</label>
+        {{ form.phone_number}}
+    </div>
+    <div class="mb-3">
+        <label for="DateOfBirth" class="form-label">Date Of Birth</label>
+        {{ form.date_of_birth}}
+    </div>
+    <div class="mb-3">
+        <label for="About" class="form-label">About Yourself</label>
+        {{ form.about}}
+        <div id="abouthelp" class="form-text">Tell about yourself, so we can get a understading upon you.</div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="{% url 'home' %}" class="btn btn-danger">Go back</a>
+</form>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block pagetitle %}Register Appointment{% endblock %}
+{% block content %}
+<div class="pt-5">
+    <div class="card">
+        <div class="card-body">
+            <h3>Confirm Appointment</h3>
+            <p><strong>Camp Name:</strong> {{ camp.camp_name }}</p>
+            <p><strong>Location:</strong> {{ camp.location }}</p>
+            <p><strong>Start Date:</strong> {{ camp.start_date_time }}</p>
+            <p><strong>End Date:</strong> {{ camp.end_date_time }}</p>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert {% if message.tags %} {{ message.tags }} {% endif %} alert-dismissible fade show"
+                role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div id="appointment_date" class="form-text pb-3">Select the date within the range of Start Date and End
+                    Date.</div>
+                <button type="submit" class="btn btn-success">Confirm Appointment</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block pagetitle %}Medifix - Home{% endblock %}
+{% block content %}
+<h2>Camp Name: {{ camp.camp_name }}</h2>
+<div class="card">
+    <div class="card-body">
+      {{ camp.description }} <br>
+      {% if user.is_superuser %}
+      <b>Created By: {{ camp.createdby }}</b>
+      {% endif %}
+    </div>
+  </div>
+  <div class="pb-2"></div>
+  <div class="card">
+    <div class="card-body">
+        <h4>Doctors:</h4>
+      <ul>
+          {% for doctor in doctors %}
+          <li>{{ doctor.doctor_name }} - {{ doctor.doctor_title }}</li>
+          {% empty %}
+          <li>No doctors found for this camp.</li>
+          {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="pb-2"></div>
+  <div class="card">
+    <div class="card-body">
+        <h4>Camp Services:</h4>
+      <ul>
+        {% for camp_ser in camp_ser %}
+        <li>{{ camp_ser.service_name }}</li>
+        {% empty %}
+        <li>No Camp Services found for this camp.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="pb-2"></div>
+    <div id="map"></div>
+    <div class="pb-2"></div>
+    <script>
+        var map = L.map('map').setView([{{ camp.latitude }}, {{ camp.longitude }}], 13);
+
+        // Add a marker for the camp location
+        L.marker([{{ camp.latitude }}, {{ camp.longitude }}]).addTo(map)
+            .bindPopup("<b>{{ camp.camp_name }}</b><br>{{ camp.description }}").openPopup();
+
+        // Add the tile layer for the map (you can use other tile providers)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    </script>
+    <!-- Button to open Google Maps with directions -->
+    <a href="https://www.google.com/maps/dir/?api=1&destination={{ camp.latitude }},{{ camp.longitude }}" target="_blank" class="btn btn-primary">Get Directions</a>
+    {% if request.user.is_superuser or camp.created_by == request.user %}
+    <a href="{% url 'camp_delete' camp.id %}" onclick="return confirm('Are you sure you want to delete this camp?')" class="btn btn-danger">Delete Camp</a>
+    {% endif %}
+{% endblock %}

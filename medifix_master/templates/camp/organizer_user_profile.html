@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block pagetitle %}Medifix - Camp Organizer detail{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        Camp Organizer {{ user_profile.user_name.username }} detail
+    </div>
+</div>
+<form>
+    <div class="mb-3">
+        <label for="Username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="Username" value="{{ user_profile.user_name.username }}" disabled>
+    </div>
+    <div class="mb-3">
+        <label for="Emailaddress" class="form-label">Email Address</label>
+        <input type="email" class="form-control" id="email" value="{{ user_profile.user_name.email }}" disabled>
+    </div>
+    <div class="mb-3">
+        <label for="PhoneNumber" class="form-label">Phone Number</label>
+        <input type="text" class="form-control" id="PhoneNumber" value="{{ user_profile.phone_number }}" disabled>
+    </div>
+    <div class="mb-3">
+        <label for="date_of_birth" class="form-label">Date of Birth</label>
+        <input type="date" class="form-control" id="date_of_birth" value="{{ user_profile.date_of_birth }}" disabled>
+    </div>
+    <div class="mb-3">
+        <label for="about" class="form-label">About</label>
+        <input type="text" class="form-control" id="about" value="{{ user_profile.about }}" disabled>
+    </div>
+    <a href="{% url 'approve_application' user_profile.user_name.username %}" class="btn btn-success">Approve</a>
+    <a href="{% url 'deny_application' user_profile.user_name.username %}" class="btn btn-danger">Deny</a>
+    <a href="{% url 'camp_organizer_request' %}" class="btn btn-danger">Go Back</a>
+</form>
+{% endblock %}

@@ -1,0 +1,5 @@
+# nginx/Dockerfile
+FROM nginx:latest
+
+# Copy the Nginx configuration file
+COPY default.conf /etc/nginx/conf.d/

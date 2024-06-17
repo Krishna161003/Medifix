@@ -1,0 +1,43 @@
+{% extends 'registration/registerbase.html' %}
+{% block content %}
+<div class="mb-5">
+    <h3 class="h4 font-weight-bold text-theme">Register</h3>
+</div>
+{% if register_form.errors %}
+{% for field in register_form %}
+{% if field.errors %}
+<li type="1" style="color: red;">{{ field.label }}: {{ field.errors|striptags }}</li>
+{% endif %}
+{% endfor %}
+{% endif %}
+<p class="text-muted mt-2 mb-3">Register with us for your incredible journey.</p>
+<form action="{% url 'register' %}" method="POST">
+    {% csrf_token %}
+    <div class="form-group mb-2">
+        <label for="InputUsername">Username</label>
+        {{register_form.username}}
+    </div>
+    <div class="form-group mb-2">
+        <label for="Inputfirstname">First Name</label>
+        {{register_form.first_name}}
+    </div>
+    <div class="form-group mb-2">
+        <label for="Inputlastname">Last name</label>
+        {{register_form.last_name}}
+    </div>
+    <div class="form-group mb-2">
+        <label for="Inputemail">Email Address</label>
+        {{register_form.email}}
+    </div>
+    <div class="form-group mb-2">
+        <label for="InputPassword1">Password</label>
+        {{register_form.password1}}
+    </div>
+    <div class="form-group mb-2">
+        <label for="InputPassword2">Re-Enter Password</label>
+        {{register_form.password2}}
+    </div>
+    <button type="submit" class="btn btn-theme">Register</button>
+    <a href="{% url 'password_reset' %}" class="forgot-link float-right text-primary">Forgot password?</a>
+</form>
+{% endblock %}

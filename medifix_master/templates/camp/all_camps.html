@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block pagetitle %}Medifix - Home{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        Register Camps
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Camp Name</th>
+            <th>Location</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>View Detail</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for camp in camps %}
+        <tr>
+            <td>{{ camp.camp_name }}</td>
+            <td>{{ camp.location }}</td>
+            <td>{{ camp.start_date_time }}</td>
+            <td>{{ camp.end_date_time }}</td>
+            <td>
+                <a href="{% url 'camp_details' camp.id %}" class="btn btn-primary">view</a>
+                {% if camp.id in user_appointments %}
+                    <a href="{% url 'view_campregistration_details' camp.id user.id %}" class="btn btn-primary">View Details</a>
+                {% else %}
+                    <a href="{% url 'register_appointment' camp.id %}" class="btn btn-success">Register</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td style="color: red;" colspan="5" class="text-center">No data Avaliable</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

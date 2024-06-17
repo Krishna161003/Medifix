@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block pagetitle %}Medifix - Camp Registration Details{% endblock %}
+{% block content %}
+<h3>Camp Registration Details</h3>
+<div class="card">
+    <div class="card-body">
+        <b>Reference Number :</b> {{appointments.appointment_number}} <br>
+        <b>Camp Name :</b> {{camp_detail.camp_name}} <br>
+        <b>Token Number :</b> {{appointments.token_no}} <br>
+        <b>Patient Name: </b> {{user_detail.get_full_name}} <br>
+        <b>Appointment Date : </b> {{appointments.appointment_date}} <br>
+        <p class="text-danger">This Details are just for your reference.</p>
+    </div>
+</div>
+
+{% endblock %}
